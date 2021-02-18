@@ -61,12 +61,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearInterval(timerID);
                 gameDisplay.removeChild(obstacle);
             } 
+            /* if obstacle is in same position (horizontally) as bird,
+             end game and stop obstacle from moving */
             if (
                 // eslint-disable-next-line no-mixed-operators
-                obstacleLeft > 200 && obstacleLeft < 280 && birdLeft === 220
+                obstacleLeft > 200 && obstacleLeft < 280 && birdLeft === 220 &&
                 // eslint-disable-next-line no-mixed-operators
-                || birdBottom === 0) {
+                birdBottom < obstacleBottom + 153|| 
+                birdBottom === 0) {
                 gameOver();
+                clearInterval(timerID);
             }
         }
         // timerID can be used again since it is within a different function/chunk
