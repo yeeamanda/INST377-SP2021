@@ -36,11 +36,35 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keyup', control);
 
     // creating new div element with class obstacle
-    // appendChild puts the obstacle div into the game-container    
+    // obstacle is right of sky (left 500) and has a random height each time
+    // appendChild puts the obstacle div into the game-container
     function generateObstacle() {
         const obstacle = document.createElement('div');
+        let obstacleLeft = 500;
+        let randomHeight = Math.random() * 60;
+        let obstacleBottom = randomHeight;
         obstacle.classList.add('obstacle');
         gameDisplay.appendChild(obstacle);
+        obstacle.style.left = obstacleLeft + 'px'
+        obstacle.style.bottom = obstacleBottom + 'px'
+
+        // moves the obstacles to the left
+        // if obstacle is at end of screen to the left, stop running moveObstacale and remove it
+        
+        function moveObstacle() {
+            obstacleLeft -= 2;
+            obstacle.style.left = obstacleLeft + 'px'
+
+            if (obstacleLeft === -60) {
+                clearInterval(timerID);
+                gameDisplay.removeChild(obstacle);
+            } 
+        }
+        // timerID can be used again since it is within a different function/chunk
+        // run generateObstacle every 3 seconds
+        let timerID = setInterval(moveObstacle, 20);
+        setTimeout(generateObstacle, 3000);
     }
-    generateObstacle()
+    generateObstacle();
+
 });
