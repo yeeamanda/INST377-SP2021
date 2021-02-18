@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // assigning each class to a constant for future reference 
+    // assigning each class to a constant for future reference
     const bird = document.querySelector('.bird');
     const gameDisplay = document.querySelector('.game-container');
     const ground = document.querySelector('.ground');
@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let birdLeft = 220;
     let birdBottom = 100;
     let gravity = 2;
+    let isGameOver = false;
 
     // at start, bird will drop by 2, be left by 220, and down 100
     function startGame() {
@@ -17,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // setInterval runs startGame every 20 ms
     // Gives the gravity effect by dropping by 2 each run (in function)
-    // setting into timerID gives us a way to stop it later (using clearInterval)
-    let timerID = setInterval(startGame, 20);
+    // setting into gametimerID gives us a way to stop it later (using clearInterval)
+    let gametimerID = setInterval(startGame, 20);
 
     // if spacebar (32) is pressed, run jump function
     function control(e) {
@@ -35,7 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // on key up, do the control function (which does jump function)
     document.addEventListener('keyup', control);
 
-    // creating new div element with class obstacle
+    // creating new div element
+    // div element given class obstacle if game is not over (isGameOver is false)
     // obstacle is right of sky (left 500) and has a random height each time
     // appendChild puts the obstacle div into the game-container
     function generateObstacle() {
@@ -43,14 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let obstacleLeft = 500;
         let randomHeight = Math.random() * 60;
         let obstacleBottom = randomHeight;
-        obstacle.classList.add('obstacle');
+        if (!isGameOver) obstacle.classList.add('obstacle');
         gameDisplay.appendChild(obstacle);
         obstacle.style.left = obstacleLeft + 'px'
         obstacle.style.bottom = obstacleBottom + 'px'
 
         // moves the obstacles to the left
         // if obstacle is at end of screen to the left, stop running moveObstacale and remove it
-        
+        // if bird height is 0, end game (gameOver function)
         function moveObstacle() {
             obstacleLeft -= 2;
             obstacle.style.left = obstacleLeft + 'px'
@@ -59,12 +61,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearInterval(timerID);
                 gameDisplay.removeChild(obstacle);
             } 
+            if (
+                // eslint-disable-next-line no-mixed-operators
+                obstacleLeft > 200 && obstacleLeft < 280 && birdLeft === 220
+                // eslint-disable-next-line no-mixed-operators
+                || birdBottom === 0) {
+                gameOver();
+            }
         }
         // timerID can be used again since it is within a different function/chunk
-        // run generateObstacle every 3 seconds
+        // run generateObstacle every 3 seconds IF isGameOver is false (not ended)
         let timerID = setInterval(moveObstacle, 20);
-        setTimeout(generateObstacle, 3000);
+        if (!isGameOver) setTimeout(generateObstacle, 3000);
     }
     generateObstacle();
 
+    // stop startGame function from running
+    // remove the spacebar event listener (can't use spacebar anymore to jump)
+    function gameOver() {
+        clearInterval(gametimerID);
+        isGameOver = true;
+        document.removeEventListener('keyup', control);
+    }
 });
