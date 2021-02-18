@@ -18,11 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // setInterval runs startGame every 20 ms
     // Gives the gravity effect by dropping by 2 each run (in function)
     // setting into timerID gives us a way to stop it later (using clearInterval)
-    setInterval(startGame, 20);
+    let timerID = setInterval(startGame, 20);
 
     // adding 50 to the bird height on jump
     function jump() {
-        birdBottom += 50;
+        if (birdBottom < 500) birdBottom += 50;
         bird.style.bottom = birdBottom + 'px'
     }
     
