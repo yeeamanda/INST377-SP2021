@@ -13,7 +13,7 @@
 }
 /*height of ground is game-container height - sky height*/
 /*top gives 580px on top of this class, making the sky appear on top/above the ground*/
-.ground{
+.ground {
     background-color: brown;
     width: 500px;
     height: 150px;
@@ -21,9 +21,16 @@
     top: 580px;
 }
 
-.bird{
+.bird {
     background-color: yellow;
     position: absolute;
     height: 45px;
     width: 60px;
   }
+
+.obstacle {
+    background-color: green;
+    width: 60px;
+    height: 300px;
+    position: absolute;
+}

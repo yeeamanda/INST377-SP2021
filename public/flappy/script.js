@@ -20,12 +20,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // setting into timerID gives us a way to stop it later (using clearInterval)
     let timerID = setInterval(startGame, 20);
 
-    // adding 50 to the bird height on jump
+    // if spacebar (32) is pressed, run jump function
+    function control(e) {
+        if (e.keyCode == 32) {
+            jump()
+        }
+    }
+
+    // adding 50 to the bird height on jump IF height less than 500
     function jump() {
         if (birdBottom < 500) birdBottom += 50;
         bird.style.bottom = birdBottom + 'px'
     }
-    
-    // on key up, do the jump function
-    document.addEventListener('keyup', jump);
+    // on key up, do the control function (which does jump function)
+    document.addEventListener('keyup', control);
+
+    // creating new div element with class obstacle
+    // appendChild puts the obstacle div into the game-container    
+    function generateObstacle() {
+        const obstacle = document.createElement('div');
+        obstacle.classList.add('obstacle');
+        gameDisplay.appendChild(obstacle);
+    }
+    generateObstacle()
 });
