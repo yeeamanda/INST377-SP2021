@@ -10,7 +10,6 @@
     width: 500px;
     height: 580px;
     position: absolute;
-
 }
 /*height of ground is game-container height - sky height*/
 /*top gives 580px on top of this class, making the sky appear on top/above the ground*/
@@ -20,5 +19,11 @@
     height: 150px;
     position: absolute;
     top: 580px;
-
 }
+
+.bird{
+    background-color: yellow;
+    position: absolute;
+    height: 45px;
+    width: 60px;
+  }
