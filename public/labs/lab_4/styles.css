@@ -1,0 +1,45 @@
+body {
+    background-color: lightseagreen;
+}
+.flex-outer li, .flex-inner{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.flex-outer > li > label, .flex-outer li p {
+    flex: 1 0 120px;
+    max-width: 200px;
+    padding: 8px;
+}
+
+.flex-outer > li > label + *, .flex-inner {
+    flex: 1 3 220px;
+}
+
+.flex-outer li button {
+    margin-left: auto;
+    padding: 8px 16px;
+    border: none;
+    background: #333;
+    color: #f2f2f2;
+    text-transform: uppercase;
+    letter-spacing: .09em;
+    border-radius: 2px;
+}
+
+/*each list item (checkbox) has a width of 100px*/
+.flex-inner li {
+    width: 100px
+}
+
+/*consistent alignment between checkboxes*/
+.flex-inner{
+    justify-content: space-between;
+}
+
+h2{
+    display:flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
