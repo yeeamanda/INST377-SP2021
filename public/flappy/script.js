@@ -1,3 +1,5 @@
+/* Create an event listener containing functionality*/
+
 document.addEventListener('DOMContentLoaded', () => {
     // assigning each class to a constant for future reference
     const bird = document.querySelector('.bird');
@@ -61,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // moves the obstacles to the left
         // if obstacle is at end of screen to the left, stop running moveObstacle and remove it
-        // if bird height is 0, end game (gameOver function)
         function moveObstacle() {
             obstacleLeft -= 2;
             obstacle.style.left = obstacleLeft + 'px'
@@ -72,19 +73,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 gameDisplay.removeChild(obstacle);
                 gameDisplay.removeChild(topobstacle);
             } 
-            /* if obstacle is in same position (horizontally) as bird,
-             end game and stop obstacle from moving */
+            /* if obstacle is in same position as bird or bird height = 0, end game */
             if (
                 // eslint-disable-next-line no-mixed-operators
                 obstacleLeft > 200 && obstacleLeft < 280 && birdLeft === 220 &&
                 // eslint-disable-next-line no-mixed-operators
-                (birdBottom < obstacleBottom + 153|| birdBottom > obstacleBottom + gap -209)|| 
+                (birdBottom < obstacleBottom + 153|| birdBottom > obstacleBottom + gap - 200)|| 
                 birdBottom === 0) {
                     gameOver();
-                clearInterval(timerID);
+                    clearInterval(timerID);
             }
         }
-        // timerID can be used again since it is within a different function/chunk
         // run generateObstacle every 3 seconds IF isGameOver is false (not ended)
         let timerID = setInterval(moveObstacle, 20);
         if (!isGameOver) setTimeout(generateObstacle, 3000);
