@@ -1,8 +1,44 @@
 /*absolute means the element will be relative to the parent*/
+body{
+    display: flex;
+}
+
 .game-container {
     width: 500px;
     height: 730px;
     position: absolute;
+    left: 80px;
+}
+
+.border-left {
+    width: 80px;
+    height: 790px;
+    position: absolute;
+    background-color: white;
+    z-index: +2;
+}
+
+/*left is width of left border + width of game-container*/
+.border-right {
+    width: 80px;
+    height: 790px;
+    position: absolute;
+    background-color: white;
+    z-index: +2;
+    left: 580px;
+}
+
+/*width is right + left border + sky
+  top is -50px to appear above the sky (not take out any of the sky)
+  :this appears 50 above sky and ends right on top of sky */
+
+.border-top {
+    width: 660px;
+    height: 50px;
+    position: absolute;
+    background-color: white;
+    z-index: +2;
+    top: -50px;
 }
 
 .sky {
@@ -13,12 +49,14 @@
 }
 /*height of ground is game-container height - sky height*/
 /*top gives 580px on top of this class, making the sky appear on top/above the ground*/
+/*z-index makes things closer or farther away (brings ground in front of pipe)*/
 .ground {
     background-color: brown;
     width: 500px;
     height: 150px;
     position: absolute;
     top: 580px;
+    z-index: +1;
 }
 
 .bird {
@@ -37,7 +75,7 @@
 
 .topobstacle {
     background-image: url('flappybird-pipe.png');
-    transform: rotate(180deg)
+    transform: rotate(180deg);
     width: 60px;
     height: 300px;
     position: absolute;

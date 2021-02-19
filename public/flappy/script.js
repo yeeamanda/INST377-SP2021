@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let birdBottom = 100;
     let gravity = 2;
     let isGameOver = false;
+    let gap = 440;
 
     // at start, bird will drop by 2, be left by 220, and down 100
     function startGame() {
@@ -36,30 +37,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // on key up, do the control function (which does jump function)
     document.addEventListener('keyup', control);
 
-    // creating new div element
+    // creating new div elements (top and bottom obstacle)
     // div element given class obstacle if game is not over (isGameOver is false)
     // obstacle is right of sky (left 500) and has a random height each time
     // appendChild puts the obstacle div into the game-container
+    // style of each obstacle is same, top is pushed up by the gap
     function generateObstacle() {
         const obstacle = document.createElement('div');
+        const topobstacle = document.createElement('div');
         let obstacleLeft = 500;
         let randomHeight = Math.random() * 60;
         let obstacleBottom = randomHeight;
-        if (!isGameOver) obstacle.classList.add('obstacle');
+        if (!isGameOver) {
+            obstacle.classList.add('obstacle');
+            topobstacle.classList.add('topobstacle');
+        }    
         gameDisplay.appendChild(obstacle);
+        gameDisplay.appendChild(topobstacle);
         obstacle.style.left = obstacleLeft + 'px'
+        topobstacle.style.left = obstacleLeft + 'px'
         obstacle.style.bottom = obstacleBottom + 'px'
+        topobstacle.style.bottom = obstacleBottom + gap + 'px'
 
         // moves the obstacles to the left
-        // if obstacle is at end of screen to the left, stop running moveObstacale and remove it
+        // if obstacle is at end of screen to the left, stop running moveObstacle and remove it
         // if bird height is 0, end game (gameOver function)
         function moveObstacle() {
             obstacleLeft -= 2;
             obstacle.style.left = obstacleLeft + 'px'
+            topobstacle.style.left = obstacleLeft + 'px'
 
             if (obstacleLeft === -60) {
                 clearInterval(timerID);
                 gameDisplay.removeChild(obstacle);
+                gameDisplay.removeChild(topobstacle);
             } 
             /* if obstacle is in same position (horizontally) as bird,
              end game and stop obstacle from moving */
@@ -67,9 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 // eslint-disable-next-line no-mixed-operators
                 obstacleLeft > 200 && obstacleLeft < 280 && birdLeft === 220 &&
                 // eslint-disable-next-line no-mixed-operators
-                birdBottom < obstacleBottom + 153|| 
+                (birdBottom < obstacleBottom + 153|| birdBottom > obstacleBottom + gap -209)|| 
                 birdBottom === 0) {
-                gameOver();
+                    gameOver();
                 clearInterval(timerID);
             }
         }
