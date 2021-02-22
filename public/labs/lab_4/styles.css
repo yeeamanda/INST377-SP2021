@@ -12,6 +12,11 @@ h1{
     max-width: 900px;
 }
 
+.flex-outer {
+    max-width: 800px;
+    padding: 0px 16px;
+}
+
 .flex-outer li, .flex-inner{
     display: flex;
     flex-wrap: wrap;
@@ -19,27 +24,27 @@ h1{
 }
 
 .flex-outer > li > label, .flex-outer li p {
-    flex: 1 0 120px;
-    max-width: 220px;
+    flex: 1 0 125px;
+    max-width: 225px;
     padding: 8px;
 }
 
 .flex-outer > li > label + *, .flex-inner {
-    flex: 1 0 220px;
+    flex: 1 0 225px;
 }
 
 .flex-outer li button {
-    padding: 8px 16px;
+    padding: 6px 12px;
     border: none;
     background: white;
     text-transform: uppercase;
     letter-spacing: .09em;
-    border-radius: 2px;
+    border-radius: 3px;
 }
 
 /*each list item (checkbox) has a width of 100px*/
 .flex-inner li {
-    width: 100px
+    width: 80px
 }
 
 /*consistent alignment between checkboxes*/
