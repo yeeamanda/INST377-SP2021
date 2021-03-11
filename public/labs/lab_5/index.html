@@ -8,22 +8,31 @@
     <title>Amanda Yee Lab 5</title>
     <link href="https://fonts.googleapis.com/css2?family=Allan&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
-<body class = "has-background-grey">
+<body>
     <div class = "container">
         <form class = "filter">
             <div class = "column is-two-fifths">
-                <h1 class = "has-text-white is-size-3">Amanda and Baldric Assignment 1</h1>
+                <h1 class = "is-size-3">Amanda Yee Lab 5</h1>
                 <input type="text" class = "search" style="width: 100%;">
                 <div class = "suggestions">
                 </div>
             </div>
         </form>
-    </div>
+        <div id = "mapid" class = "column is-offset-5 mt-2" style = "width: 40%; height: 300px;">
 
+        </div>
+    </div>
 </body>
 <script type="text/javascript" src="script.js"></script>
 
