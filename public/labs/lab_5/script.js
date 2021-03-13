@@ -1,6 +1,6 @@
 function mapInit() {
   // follow the Leaflet Getting Started tutorial here
-  let map = L.map('mapid').setView([38.937661,-76.944736], 13);
+  let map = L.map('mapid').setView([38.9897, -76.9378], 13);
    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -21,69 +21,40 @@ async function dataHandler(mapObjectFromFunction) {
   const request = await fetch(endpoint);
   const mArr = await request.json().then(data => foodPlace.push(...data));
 
-  /*function findMatches(searchQuery, foodPlace) {
-    return foodPlace.filter(place => {
-      const regex = new RegExp(searchQuery, 'gi'); //regExp is an object that goes into .match method
-      return place.zip.match(regex)
-    });
-  };*/
-
-  function displayMatches(event) {
-    query = event.target.value;
-    /*const matchArr = findMatches(query, foodPlace);// this.value is the data being input in the form
-    const html = newmatch.map(place => {// .map makes array with equal size but replaces the values
-      return `         
-          <li class = "box has-background-danger-light">
-              <span class="name">${place.name}</span> <br>
-              <address>
-                  ${place.address_line_1}
-              </address> <br>
-              <span class = "zip">${place.zip}</span>
-          </li>           
-      `;
-
-      }).join(''); // This changes html from an array to a big string
-
-    if(query) {
-      suggestions.innerHTML = html;// takes html strong from html and creates html in this element
-    } else {
-      suggestions.innerHTML = '';
-    }*/
-    
-    let myLines = foodPlace.filter((item) => (item.zip.includes(query) && item.geocoded_column_1));
-    const firstFive = myLines.slice(0,5)
-		firstFive.forEach((inst) =>{
-    		const coord = inst.geocoded_column_1.coordinates;
-  			let marker = L.marker([coord[1], coord[0]]).addTo(mapObjectFromFunction);
-				const html = firstFive.map(place => {// .map makes array with equal size but replaces the values
-      return `         
-          <li class = "box has-background-danger-light">
-              <span class="name">${place.name}</span> <br>
-              <address>
-                  ${place.address_line_1}
-              </address>
-              <span class = "zip">${place.zip}</span>
-          </li>           
-      `;
-       }).join(''); // This changes html from an array to a big string
-
-    if(query) {
-      suggestions.innerHTML = html;// takes html strong from html and creates html in this element
-    } else {
-      suggestions.innerHTML = '';
-    }
-    
-    });
-    
-    return mapObjectFromFunction;
-    
-  };
-
-  const searchInput = document.querySelector('.search'); //This chooses an element with the class search
+  const form = document.querySelector('.form'); //This chooses an element with the class search
   const suggestions = document.querySelector('.suggestions'); //Chooses element with class suggestions
+  
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    query = event.target.value;
+	  const myLines = foodPlace.filter((item) => (item.zip.includes(query) && item.geocoded_column_1));
+    const firstFive = myLines.slice(0, 5);
 
-  searchInput.addEventListener('change',(evt)=> displayMatches(evt));
-  searchInput.addEventListener('keyup',(evt)=> displayMatches(evt));
+		firstFive.forEach((inst) =>{
+    	const coord = inst.geocoded_column_1.coordinates;
+  		const marker = L.marker([coord[1], coord[0]]).addTo(mapObjectFromFunction);
+			const html = firstFive.map(place => {// .map makes array with equal size but replaces the values
+        return `         
+          <li class = "box has-background-danger-light">
+            <span class="name">${place.name}</span> <br>
+            <address>
+              ${place.address_line_1}
+            </address>
+            <span class = "zip">${place.zip}</span>
+          </li>
+      	  `;
+        }).join(''); // This changes html from an array to a big string
+
+    	  if(query) {
+      	  suggestions.innerHTML = html;// takes html strong from html and creates html in this element
+    		} else {
+      	  suggestions.innerHTML = '';
+    		}
+    
+    }); 
+
+   });
+
 
 }
 
