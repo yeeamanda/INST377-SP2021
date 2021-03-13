@@ -20,21 +20,23 @@ async function dataHandler(mapObjectFromFunction) {
   const foodPlace = [];
   const request = await fetch(endpoint);
   const mArr = await request.json().then(data => foodPlace.push(...data));
+  
 
   const form = document.querySelector('.form'); //This chooses an element with the class search
   const suggestions = document.querySelector('.suggestions'); //Chooses element with class suggestions
+  const searchInput = document.querySelector('#search');
+
   
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    query = event.target.value;
-	  const myLines = foodPlace.filter((item) => (item.zip.includes(query) && item.geocoded_column_1));
+	  const myLines = foodPlace.filter((item) => (item.zip.includes(searchInput.value) && item.geocoded_column_1));
     const firstFive = myLines.slice(0, 5);
 
 		firstFive.forEach((inst) =>{
     	const coord = inst.geocoded_column_1.coordinates;
   		const marker = L.marker([coord[1], coord[0]]).addTo(mapObjectFromFunction);
 			const html = firstFive.map(place => {// .map makes array with equal size but replaces the values
-        return `         
+        return `
           <li class = "box has-background-danger-light">
             <span class="name">${place.name}</span> <br>
             <address>
@@ -45,14 +47,17 @@ async function dataHandler(mapObjectFromFunction) {
       	  `;
         }).join(''); // This changes html from an array to a big string
 
-    	  if(query) {
+    	  if(searchInput.value) {
       	  suggestions.innerHTML = html;// takes html strong from html and creates html in this element
     		} else {
       	  suggestions.innerHTML = '';
     		}
     
     }); 
-
+    
+    
+    const pancoordinates = firstFive[0].geocoded_column_1.coordinates;
+    mapObjectFromFunction.panTo([pancoordinates[1], pancoordinates[0]], 0);
    });
 
 
