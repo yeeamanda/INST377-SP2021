@@ -20,18 +20,19 @@
 </head>
 
 <body>
-    <div class = "container">
+    <div class = "container m-4">
         <form class = "filter">
-            <div class = "column is-two-fifths">
+            <div class = "columns">
+            <div class = "column is-half">
                 <h1 class = "is-size-3">Amanda Yee Lab 5</h1>
-                <input type="text" class = "search" style="width: 100%;">
+                <input type="text" class = "search" name = "search" style="width: 100%;">
+                <button type = "submit" class = "submit">Submit</button>
                 <div class = "suggestions">
                 </div>
             </div>
+            <div id = "mapid" class = "column mt-4" style = " height: 350px;"></div>
+          </div>
         </form>
-        <div id = "mapid" class = "column is-offset-5 mt-2" style = "width: 40%; height: 300px;">
-
-        </div>
     </div>
 </body>
 <script type="text/javascript" src="script.js"></script>
