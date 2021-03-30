@@ -1,7 +1,7 @@
 const grid = document.querySelector('.grid');
 const doodler = document.createElement('div');
 let doodlerSpaceLeft = 50;
-let doodlerSpaceBottom = 150;
+let doodlerSpaceBottom = 250;
 let isGameOver = false;
 let platformCount = 5;
 let platforms = [];
@@ -39,11 +39,23 @@ function createPlatforms() {
     }
 }
 
+//moving platforms if the doodler is above 200 px from bottom
+//for each platform created, it moves down 4 px
+function movePlatforms() {
+    if (doodlerSpaceBottom > 200) {
+        platforms.forEach(item => {
+            item.bottom -= 4;
+            let visual = item.visual;
+            visual.style.bottom = item.bottom + 'px';
+        })
+    }
+}
 
 function start() {
     if (isGameOver == false) {
         createDoodler()
         createPlatforms()
+        setInterval(movePlatforms,30) //movePlatforms function is run every 30 seconds
 
     }
 }
