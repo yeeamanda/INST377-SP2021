@@ -5,6 +5,8 @@ let doodlerSpaceBottom = 250;
 let isGameOver = false;
 let platformCount = 5;
 let platforms = [];
+let upTimerId;
+let downTimerId;
 
 function createDoodler() {
     grid.appendChild(doodler);
@@ -51,12 +53,37 @@ function movePlatforms() {
     }
 }
 
+//first clear downTimerId since it will move down if above 350
+//20px is added to space below doodler every 30ms
+//if the space below doodler is above 350, make it fall
+function jump() {
+    clearInterval(downTimerId);
+    upTimerId = setInterval(function() {
+        doodlerSpaceBottom += 20;
+        doodler.style.bottom = doodlerSpaceBottom + 'px';
+        if (doodlerSpaceBottom > 350) {
+            fall();
+        }
+    },30)
+}
+
+//clearInterval stops the setInterval
+//doodler will stop going up 20px every 30ms
+//Instead of going up it will go down by 5px
+function fall () {
+    clearInterval(upTimerId);
+    downTimerId = setInterval(function () {
+        doodlerSpaceBottom -= 5;
+        doodler.style.bottom = doodlerSpaceBottom + 'px';
+    })
+}
+
 function start() {
     if (isGameOver == false) {
         createDoodler()
         createPlatforms()
         setInterval(movePlatforms,30) //movePlatforms function is run every 30 seconds
-
+        jump()
     }
 }
 start()
