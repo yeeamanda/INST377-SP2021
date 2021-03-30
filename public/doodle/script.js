@@ -7,10 +7,12 @@ let platformCount = 5;
 let platforms = [];
 let upTimerId;
 let downTimerId;
+let isJumping = true;
 
 function createDoodler() {
     grid.appendChild(doodler);
     doodler.classList.add('doodler');
+    doodlerSpaceLeft = platforms[0].left;
     doodler.style.left = doodlerSpaceLeft + 'px';
     doodler.style.bottom = doodlerSpaceBottom + 'px';
 }
@@ -58,6 +60,7 @@ function movePlatforms() {
 //if the space below doodler is above 350, make it fall
 function jump() {
     clearInterval(downTimerId);
+    isJumping = true;
     upTimerId = setInterval(function() {
         doodlerSpaceBottom += 20;
         doodler.style.bottom = doodlerSpaceBottom + 'px';
@@ -72,16 +75,41 @@ function jump() {
 //Instead of going up it will go down by 5px
 function fall () {
     clearInterval(upTimerId);
+    isJumping = false;
     downTimerId = setInterval(function () {
         doodlerSpaceBottom -= 5;
         doodler.style.bottom = doodlerSpaceBottom + 'px';
+        if (doodlerSpaceBottom <= 0) {
+            gameOver();
+        }
+        platforms.forEach(platform => {
+            if (doodlerSpaceBottom >= platform.bottom) && ()
+        })
     })
 }
 
+function gameOver() {
+    isGameOver = true;
+    clearInterval(upTimerId);
+    clearInterval(downTimerId);
+}
+
+
+function control (){
+    if (e.key === "ArrowLeft") {
+        //move left
+    } else if (e.key === "ArrowRight") {
+        //move right
+    } else if (e.key === "Arrow Up") {
+        //move straight
+    }
+}
+
+
 function start() {
     if (isGameOver == false) {
-        createDoodler()
         createPlatforms()
+        createDoodler()
         setInterval(movePlatforms,30) //movePlatforms function is run every 30 seconds
         jump()
     }
