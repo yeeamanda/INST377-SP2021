@@ -13,6 +13,7 @@ let isGoingLeft = false;
 let isGoingRight = false;
 let leftTimerId;
 let rightTimerId;
+let score = 0;
 
 function createDoodler() {
     grid.appendChild(doodler);
@@ -56,6 +57,18 @@ function movePlatforms() {
             item.bottom -= 4;
             let visual = item.visual;
             visual.style.bottom = item.bottom + 'px';
+//if the bottom of the platform is less than 10 then get rid of it
+//remove the first one from the screen and shift the rest of the platforms over
+//a new platform will be added with bottom space of 600
+            if (item.bottom < 10) {
+                let firstPlatform = platforms[0].visual;
+                firstPlatform.classList.remove('platform');
+                platforms.shift();
+                score++;
+                let newPlatform = new Platform(600);
+                platforms.push(newPlatform);
+
+            }
         });
     }
 }
@@ -102,10 +115,18 @@ function fall () {
     },30);
 }
 
+//while there is a child on grid, remove the first one until there are no more
+//creates an automatic stop once the doodler hits the ground
 function gameOver() {
     isGameOver = true;
+    while (grid.firstChild) {
+        grid.removeChild(grid.firstChild);
+    }
+    grid.innerHTML = score;
     clearInterval(upTimerId);
     clearInterval(downTimerId);
+    clearInterval(leftTimerId);
+    clearInterval(rightTimerId);
 }
 
 
@@ -131,7 +152,7 @@ function moveLeft() {
             doodlerSpaceLeft -= 5;
             doodler.style.left = doodlerSpaceLeft + 'px';    
         } else moveRight();
-    }, 30);
+    }, 20);
 }
 
 function moveRight() {
@@ -145,7 +166,7 @@ function moveRight() {
             doodlerSpaceLeft += 5;
             doodler.style.left = doodlerSpaceLeft + 'px';
         } else moveLeft();
-    }, 30)
+    }, 20)
 }
 
 function moveStraight() {
